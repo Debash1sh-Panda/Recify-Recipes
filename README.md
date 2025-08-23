@@ -1,4 +1,4 @@
-# 🍽️ RecipeHub
+# 🍽️ Recify – Recipes, Simplified
 
 RecipeHub is a modern **MENN Stack** (MongoDB, Express, Next, Node.js) based web application for food lovers.  
 Users can **explore, upload, and share** recipes while also saving favorites, planning meals, and discovering trending cuisines.  
