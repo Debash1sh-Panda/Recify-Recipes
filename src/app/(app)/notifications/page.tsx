@@ -41,7 +41,7 @@ export default function NotificationsPage() {
   }, {});
 
   return (
-    <div className="w-[100vw] md:w-[80vw] mx-auto min-h-screen">
+    <div className="w-[100vw] md:w-[80vw] mx-auto min-h-screen p-2 md:p-15">
       {/* Header */}
       <div className="p-4 font-bold text-lg">
         Notifications
