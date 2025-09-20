@@ -10,8 +10,11 @@ import { GoHeart, GoHeartFill } from "react-icons/go";
 import { FiPlusSquare } from "react-icons/fi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { FaRegCompass } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CreateModal from "./CreateModal";
+import SearchComponent from "./SearchComponent";
+import { useRouter } from "next/navigation";
+import ContextProvider, { Context } from "@/app/context/ContextProvider";
 
 type Item = {
   label: string;
@@ -27,14 +30,9 @@ const items: Item[] = [
     icon: <AiOutlineHome size={24} />,
     activeIcon: <AiFillHome size={24} />,
   },
-  { label: "Search", href: "/search", icon: <BiSearch size={24} /> },
   { label: "Explore", href: "/explore", icon: <FaRegCompass size={22} /> },
   { label: "Reels", href: "/reels", icon: <PiVideoFill size={22} /> },
-  {
-    label: "Messages",
-    href: "/direct/inbox",
-    icon: <RiMessengerLine size={22} />,
-  },
+ 
   {
     label: "Notifications",
     href: "/notifications",
@@ -45,28 +43,37 @@ const items: Item[] = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [hide, setHide]= useState(false);
+  const [hide, setHide] = useState(false);
+  const [searchHide, setSearchHide] = useState(false);
+  const router=useRouter();
+  const context=useContext(Context);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
 
-  const Create=()=>{
+  const Create = () => {
     setHide(!hide);
+  };
+
+  const Search = () => {
+    setSearchHide(true);
+  };
+
+  const Message=()=>{
+    router.push("/direct")
+    context?.setHideMessage(!context);
   }
-
-  
-
 
   return (
     <>
       <aside
-        className="
+        className={`
         hidden sm:flex fixed left-0 top-0 h-screen w-64 border-r border-gray-50
         bg-black z-30 flex-col justify-between
         px-3 py-6
-      "
+      `}
       >
         <div className="px-3">
           <Link href="/" className="inline-flex items-center">
@@ -105,13 +112,39 @@ export default function Sidebar() {
             );
           })}
 
-          <div className="flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors hover:text-black" onClick={Create}>
-            <span><FiPlusSquare size={20}/> </span><span>Create</span>
+          <div
+            className="flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors hover:text-black"
+            onClick={Message}
+          >
+            <span>
+              <RiMessengerLine size={22} />{" "}
+            </span>
+            <span>Messages</span>
+          </div>
+
+          <div
+            className="flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors hover:text-black"
+            onClick={Create}
+          >
+            <span>
+              <FiPlusSquare size={20} />{" "}
+            </span>
+            <span>Create</span>
+          </div>
+
+          <div
+            className="flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors hover:text-black"
+            onClick={Search}
+          >
+            <span>
+              <BiSearch size={20} />{" "}
+            </span>
+            <span>Search</span>
           </div>
 
           <Link
             href="/profile"
-            className="group flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors"
+            className="group flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 hover:text-black transition-colors"
           >
             <span className="w-6 h-6">
               <Image
@@ -119,15 +152,15 @@ export default function Sidebar() {
                 alt="Profile"
                 width={24}
                 height={24}
-                className="rounded-full"
+                className="rounded-full "
               />
             </span>
-            <span>Profile</span>
+            <span >Profile</span>
           </Link>
         </nav>
 
         <button
-          className="flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors"
+          className="flex items-center gap-3 rounded-xl px-3 py-3 text-[15px] font-medium hover:bg-gray-100 transition-colors hover:text-black"
           type="button"
         >
           <HiOutlineMenu size={22} />
@@ -174,12 +207,8 @@ export default function Sidebar() {
         </div>
       </nav>
 
-      <div className="hidden sm:block w-64" />
-        
- 
-      {hide && <CreateModal setHideContent={setHide}/>}
-    
-  
+      {hide && <CreateModal setHideContent={setHide} />}
+      <SearchComponent searchHide={searchHide} setSearchHide={setSearchHide} />
     </>
   );
 }

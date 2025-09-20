@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function InstagramProfile() {
   return (
-    <div className="md:w-[70vw] w-[100vw] mx-auto p-4">
+    <div className="md:w-[70vw] w-[100vw] mx-auto p-4 md:p-15">
       {/* Profile Top */}
 
      

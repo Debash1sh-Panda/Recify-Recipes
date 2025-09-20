@@ -2,16 +2,19 @@ import CreateSvg from "@/app/svg/CreateSvg";
 import React, { useState } from "react";
 import { CreateCarousal } from "./CreateCarousal";
 import Image from "next/image";
+import { LuArrowLeft } from "react-icons/lu";
 
-function CreateModal({ setHideContent }:{
-    setHideContent: React.Dispatch<React.SetStateAction<boolean>>
+function CreateModal({
+  setHideContent,
+}: {
+  setHideContent: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [hide, setHide] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
   const [urls, setUrls] = useState<string[]>([]);
   const [next, setNext] = useState(false);
-  const [postComment, setPostComment]= useState<string>("");
-  const [collaborators,setCollaborators]=useState<string>("");
+  const [postComment, setPostComment] = useState<string>("");
+  const [collaborators, setCollaborators] = useState<string>("");
 
   const FileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -22,29 +25,26 @@ function CreateModal({ setHideContent }:{
     setUrls((prev) => [...prev, ...newUrls]);
   };
 
-  const handleChange=(e:React.ChangeEvent<HTMLTextAreaElement>)=>{
-    setPostComment(e.target.value)
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostComment(e.target.value);
+  };
 
-
-  const handleCollaboratorsChange=(e: React.ChangeEvent<HTMLInputElement> )=>{
-    setCollaborators(e.target.value)
-  }
-
+  const handleCollaboratorsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCollaborators(e.target.value);
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black/70 hidden md:flex justify-center items-center z-50">
       <div className="w-[800px] h-[500px] bg-black rounded-lg flex overflow-hidden">
-        
-        {/* Left Section - Image/Upload */}
         <div className="w-2/3 bg-black flex flex-col">
-          {/* Header */}
           <div className="flex justify-between items-center h-[50px] border-b border-gray-700 px-4 py-2">
             <button
               onClick={() => setHideContent(false)}
-              className="text-white text-lg font-bold"
+              className="text-white text-lg font-bold cursor-pointer"
             >
-              ←
+              <LuArrowLeft />
             </button>
             <h1 className="text-white font-semibold">
               {hide ? "Create new post" : "Preview"}
@@ -92,7 +92,6 @@ function CreateModal({ setHideContent }:{
         </div>
 
         <div className="w-1/3 bg-black border-l border-gray-700 flex flex-col">
-         
           <div className="flex items-center gap-3 p-3 border-b border-gray-700">
             <Image
               src="https://i.pravatar.cc/150?img=2"
@@ -110,12 +109,19 @@ function CreateModal({ setHideContent }:{
               placeholder="Write a caption..."
               onChange={handleChange}
             />
-            <div className="text-right text-gray-500 text-xs">{postComment.length ?? 0}/2200</div>
+            <div className="text-right text-gray-500 text-xs">
+              {postComment.length ?? 0}/2200
+            </div>
           </div>
 
           <div className="flex-1 text-sm text-gray-300 overflow-y-auto">
             <div className="flex justify-between items-center p-4 border-b border-gray-700 bg-[#2c2c2c]">
-              <input type="text" onChange={handleCollaboratorsChange} className="border-0 outline-0 p-2" placeholder="Add Collaborators" />
+              <input
+                type="text"
+                onChange={handleCollaboratorsChange}
+                className="border-0 outline-0 p-2"
+                placeholder="Add Collaborators"
+              />
               <span className="text-lg">👥</span>
             </div>
             <div className="flex justify-between items-center p-4 bg-[#2c2c2c]">
@@ -135,8 +141,7 @@ function CreateModal({ setHideContent }:{
               />
               <span className="text-white">somgorai268</span>
             </div>
-            <p className="text-xs">Threads · Public</p>
-            <p className="mt-2 text-xs">Accessibility</p>
+           
           </div>
         </div>
       </div>
