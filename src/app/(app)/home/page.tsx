@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import React from "react";
 import { FiHeart, FiMessageCircle, FiSend } from "react-icons/fi";
@@ -28,6 +29,7 @@ const dummyPosts = [
 ];
 
 export default function Page() {
+
   return (
     <div className="flex justify-center min-h-screen py-10 w-full">
       <div className="w-full max-w-md">

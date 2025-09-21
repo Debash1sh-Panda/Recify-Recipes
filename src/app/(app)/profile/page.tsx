@@ -1,13 +1,30 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Profile } from "@/app/service/user/ProfileService";
 
 export default function InstagramProfile() {
-  return (
-    <div className="md:w-[70vw] w-[100vw] mx-auto p-4 md:p-15">
-      {/* Profile Top */}
 
-     
+  const router=useRouter();
+  const [profile,setProfile]=useState([]);
+
+  const getProfileDetails= async()=>{
+    const response= await Profile.getProfile();
+    setProfile(response.user);
+  }
+
+
+  useEffect(()=>{
+
+    getProfileDetails();
+
+  },[]);
+
+
+  return (
+    <div className="w-[82vw] mx-auto p-4 md:p-15">
+    
         <div className="flex flex-col md:flex-row md:items-center gap-6 mb-6">
           {/* Profile Pic */}
           <div className="flex justify-center md:block">
@@ -30,7 +47,7 @@ export default function InstagramProfile() {
               </h2>
 
               <div className="flex gap-2 mt-3 md:mt-0 justify-center md:justify-start">
-                <button className="flex-1 md:flex-none px-4 py-1 border rounded-md text-sm font-semibold">
+                <button className="flex-1 md:flex-none px-4 py-1 border rounded-md text-sm font-semibold" onClick={()=>router.push("/profile/edit/2235")}>
                   Edit Profile
                 </button>
                 <button className="flex-1 md:flex-none px-4 py-1 border rounded-md text-sm font-semibold">

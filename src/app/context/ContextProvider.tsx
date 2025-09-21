@@ -8,7 +8,7 @@ type ContextType={
 }
 export const Context = createContext<ContextType | null>(null);
 
-function ContextProvider({ children }: {children: React.ReactElement}) {
+function ContextProvider({ children }: {children: React.ReactNode}) {
   const [hideMessage, setHideMessage] = useState<boolean>(false);
 
   return <Context.Provider value={{ hideMessage, setHideMessage }}>{children}</Context.Provider>;

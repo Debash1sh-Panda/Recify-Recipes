@@ -10,11 +10,12 @@ import { GoHeart, GoHeartFill } from "react-icons/go";
 import { FiPlusSquare } from "react-icons/fi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { FaRegCompass } from "react-icons/fa";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CreateModal from "./CreateModal";
 import SearchComponent from "./SearchComponent";
 import { useRouter } from "next/navigation";
-import ContextProvider, { Context } from "@/app/context/ContextProvider";
+import { Context } from "@/app/context/ContextProvider";
+import { getSession } from "next-auth/react";
 
 type Item = {
   label: string;
@@ -47,6 +48,7 @@ export default function Sidebar() {
   const [searchHide, setSearchHide] = useState(false);
   const router=useRouter();
   const context=useContext(Context);
+
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
